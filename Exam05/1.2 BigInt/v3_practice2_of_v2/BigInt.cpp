@@ -57,7 +57,10 @@ std::string	BigInt::addStrings(const std::string & s1, const std::string & s2) c
 	std::string	result;
 	size_t i = 0, l1 = s1.size(), l2 = s2.size(), len;
 	len = l1 > l2 ? l1 : l2;
-	unsigned int	s1_r, s2_r, res, cto = 0;;
+	unsigned int	s1_r, // chiffre de s1
+					s2_r, // chiffre de s2
+					res, // resultat du calcul
+					cto = 0; // carry / retenue
 	while (i < len)
 	{
 		s1_r = i < l1 ? (s1[i] - '0') : 0;
