@@ -68,7 +68,7 @@ std::string	BigInt::addStrings(const std::string & s1, const std::string & s2) c
 		res = s1_r + s2_r + cto;
 		cto = res / 10;
 		res = res % 10;
-		result.push_back(res + '0');
+		result.push_back(res + '0'); // convertir en char le resultat du calcul avant d'ajouter dans result
 		i++;
 	}
 	if (cto)
