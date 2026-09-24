@@ -172,7 +172,7 @@ BigInt			BigInt::operator>>(const BigInt & shift) const {
 	BigInt			result = *this;
 	while (i < n && !(result._value.empty()))
 	{
-		result._value.erase(0, 1);
+		result._value.erase(0, 1); // delete one character from indice = 0
 		i++;
 	}
 	return (result);
