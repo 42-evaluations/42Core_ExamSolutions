@@ -18,17 +18,20 @@
 # include <algorithm>
 # include <string>
 
-// creer un alias
-// a essayer pour alleger l'ecriture
-// la deplacer dans la classe si tu veux la limiter juste a la classe
-// using String = std::string;
+namespace BigIntTypes
+{
+	typedef std::string				String;
+	typedef std::string::size_type	Size;
+	typedef unsigned int			UInt;
+	typedef std::ostream			Ostream;
+}
 
 class BigInt
 {
 private:
-	typedef std::string				String;
-	typedef std::string::size_type	Size;
-	typedef unsigned int			UInt;
+	typedef BigIntTypes::String	String;
+	typedef BigIntTypes::Size	Size;
+	typedef BigIntTypes::UInt	UInt;
 
 	String	_value;
 	String	addStrings(const String &s1, const String &s2) const;

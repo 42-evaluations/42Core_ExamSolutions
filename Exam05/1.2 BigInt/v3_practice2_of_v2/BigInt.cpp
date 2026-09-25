@@ -12,18 +12,22 @@
 
 #include "BigInt.hpp"
 
+using namespace BigIntTypes;
+
 BigInt::BigInt() : _value("0") {}
 
-BigInt::BigInt(unsigned int n) {
+BigInt::BigInt(UInt n) {
 	std::ostringstream	oss;
+
 	oss << n;
 	_value = oss.str();
 	std::reverse(_value.begin(), _value.end());
 }
 
-BigInt::BigInt(const std::string & num) {
+BigInt::BigInt(const String & num) {
 	bool	isNum = true;
 	size_t	i = 0, len = num.size();
+
 	while (i < len)
 	{
 		if (!(::isdigit(num[i])))
@@ -47,20 +51,21 @@ BigInt::BigInt(const BigInt & src) {
 
 BigInt::~BigInt() {}
 
-BigInt &	BigInt::operator=(const BigInt & rhs) {
+BigInt &	BigInt::operator=(const BigInt &rhs) {
 	if (this != &rhs)
 		_value = rhs._value;
 	return (*this);
 }
 
-std::string	BigInt::addStrings(const std::string & s1, const std::string & s2) const {
-	std::string	result;
+String	BigInt::addStrings(const String &s1, const String &s2) const {
+	String	result;
 	size_t i = 0, l1 = s1.size(), l2 = s2.size(), len;
 	len = l1 > l2 ? l1 : l2;
-	unsigned int	s1_r, // chiffre de s1
+	UInt	s1_r, // chiffre de s1
 					s2_r, // chiffre de s2
 					res, // resultat du calcul
 					cto = 0; // carry / retenue
+
 	while (i < len)
 	{
 		s1_r = i < l1 ? (s1[i] - '0') : 0;
@@ -81,26 +86,29 @@ void	BigInt::removeZeros() {
 		_value.erase(_value.size() - 1);
 }
 
-std::string		BigInt::getVal() const {
-	std::string ret = _value;
+String		BigInt::getVal() const {
+	String ret = _value;
+
 	std::reverse(ret.begin(), ret.end());
 	return (ret);
 }
 
-unsigned int	BigInt::toInt(const std::string & str) const {
-	unsigned int		num;
+UInt	BigInt::toInt(const String &str) const {
+	UInt		num;
 	std::istringstream	iss(str);
+
 	iss >> num;
 	return (num);
 }
 
-BigInt			BigInt::operator+(const BigInt & rhs) const {
+BigInt			BigInt::operator+(const BigInt &rhs) const {
 	BigInt	result;
+
 	result._value = addStrings(_value, rhs._value);
 	return (result);
 }
 
-BigInt &		BigInt::operator+=(const BigInt & rhs) {
+BigInt &		BigInt::operator+=(const BigInt &rhs) {
 	_value = addStrings(_value, rhs._value);
 	return (*this);
 }
@@ -116,51 +124,37 @@ BigInt &		BigInt::operator++() {
 	return (*this);
 }
 
-bool			BigInt::operator==(const BigInt & rhs) const {
-	if (_value == rhs._value)
-		return (true);
-	return (false);
+bool			BigInt::operator==(const BigInt &rhs) const {
+	return (_value == rhs._value);
 }
 
-bool			BigInt::operator!=(const BigInt & rhs) const {
-	if (_value != rhs._value)
-		return (true);
-	return (false);
+bool			BigInt::operator!=(const BigInt &rhs) const {
+	return (_value != rhs._value);
 }
 
-bool			BigInt::operator>(const BigInt & rhs) const {
-	if (_value.size() > rhs._value.size())
-		return (true);
-	else if (_value.size() < rhs._value.size())
-		return (false);
-	else if (getVal() > rhs.getVal())
-		return (true);
-	return (false);
+bool			BigInt::operator>(const BigInt &rhs) const {
+	if (_value.size() != rhs._value.size())
+		return (_value.size() > rhs._value.size());
+	return (getVal() > rhs.getVal());
 }
 
-bool			BigInt::operator>=(const BigInt & rhs) const {
-	if (*this > rhs || *this == rhs)
-		return (true);
-	return (false);
+bool			BigInt::operator>=(const BigInt &rhs) const {
+	return (!(*this < rhs));
 }
 
-bool			BigInt::operator<(const BigInt & rhs) const {
-	if (!(*this > rhs) && (*this != rhs))
-		return (true);
-	return (false);
+bool			BigInt::operator<(const BigInt &rhs) const {
+	return (!(*this > rhs) && (*this != rhs));
 }
 
-bool			BigInt::operator<=(const BigInt & rhs) const {
-	if (!(*this > rhs) || *this == rhs)
-		return (true);
-	return (false);
+bool			BigInt::operator<=(const BigInt &rhs) const {
+	return (!(*this > rhs));
 }
 
+BigInt			BigInt::operator<<(const BigInt &shift) const {
+	UInt	n = toInt(shift.getVal());
+	UInt	i = 0;
+	BigInt	result = *this;
 
-BigInt			BigInt::operator<<(const BigInt & shift) const {
-	unsigned int	n = toInt(shift.getVal());
-	unsigned int	i = 0;
-	BigInt			result = *this;
 	while (i < n)
 	{
 		result._value = '0' + result._value;
@@ -169,10 +163,11 @@ BigInt			BigInt::operator<<(const BigInt & shift) const {
 	return (result);
 }
 
-BigInt			BigInt::operator>>(const BigInt & shift) const {
-	unsigned int	n = toInt(shift.getVal());
-	unsigned int	i = 0;
-	BigInt			result = *this;
+BigInt			BigInt::operator>>(const BigInt &shift) const {
+	UInt	n = toInt(shift.getVal());
+	UInt	i = 0;
+	BigInt	result = *this;
+
 	while (i < n && !(result._value.empty()))
 	{
 		result._value.erase(0, 1); // delete one character from indice = 0
@@ -181,19 +176,17 @@ BigInt			BigInt::operator>>(const BigInt & shift) const {
 	return (result);
 }
 
-
-BigInt &		BigInt::operator<<=(const BigInt & shift) {
+BigInt &		BigInt::operator<<=(const BigInt &shift) {
 	_value = (*this << shift)._value;
 	return (*this);
 }
 
-BigInt &		BigInt::operator>>=(const BigInt & shift) {
+BigInt &		BigInt::operator>>=(const BigInt &shift) {
 	_value = (*this >> shift)._value;
 	return (*this);
 }
 
-
-std::ostream &		operator<<(std::ostream & o, const BigInt & obj) {
+std::ostream &		operator<<(std::ostream & o, const BigInt &obj) {
 	o << obj.getVal() << std::endl;
 	return (o);
 }
