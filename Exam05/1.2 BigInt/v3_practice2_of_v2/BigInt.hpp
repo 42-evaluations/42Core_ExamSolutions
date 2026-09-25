@@ -21,18 +21,12 @@
 namespace BigIntTypes
 {
 	typedef std::string				String;
-	typedef std::string::size_type	Size;
 	typedef unsigned int			UInt;
-	typedef std::ostream			Ostream;
 }
 
 class BigInt
 {
 private:
-	typedef BigIntTypes::String	String;
-	typedef BigIntTypes::Size	Size;
-	typedef BigIntTypes::UInt	UInt;
-
 	String	_value;
 	String	addStrings(const String &s1, const String &s2) const;
 	void	removeZeros();
