@@ -18,9 +18,19 @@
 # include <algorithm>
 # include <string>
 
+# creer un alias
+# a essayer pour alleger l'ecriture
+# la deplacer dans la classe si tu veux la limiter juste a la classe
+# using String = std::string;
+
 class BigInt
 {
 private:
+	using String	= std::String;
+	using Size		= std::string::size_type;
+	using UInt		= unsigned int;
+	Ostream			= std::ostream;
+
 	std::string	_value;
 	std::string	addStrings(const std::string & s1, const std::string & s2) const;
 	void	removeZeros();
