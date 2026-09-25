@@ -27,19 +27,19 @@ namespace BigIntTypes
 class BigInt
 {
 private:
-	typedef BigIntTypes::String	String;
-	typedef BigIntTypes::UInt	UInt;
+	typedef			BigIntTypes::String	String;
+	typedef			BigIntTypes::UInt	UInt;
 
-	String	_value;
-	String	addStrings(const String &s1, const String &s2) const;
-	void	removeZeros();
+	String			_value;
+	String			addStrings(const String &s1, const String &s2) const;
+	void			removeZeros();
 
 public:
 	BigInt();
+	~BigInt();
 	BigInt(UInt n);
 	BigInt(const String &num);
 	BigInt(const BigInt &src);
-	~BigInt();
 	BigInt&			operator=(const 	BigInt &rhs);
 
 	String			getVal() const;
