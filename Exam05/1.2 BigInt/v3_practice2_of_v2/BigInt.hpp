@@ -27,6 +27,9 @@ namespace BigIntTypes
 class BigInt
 {
 private:
+	typedef BigIntTypes::String	String;
+	typedef BigIntTypes::UInt	UInt;
+
 	String	_value;
 	String	addStrings(const String &s1, const String &s2) const;
 	void	removeZeros();
