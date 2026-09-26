@@ -1,0 +1,161 @@
+#include "bigint.hpp"
+#include <cctype>
+
+bigint::bigint() : _value("0") {}
+
+bigint::bigint(UInt n)
+{
+	std::ostringstream out;
+	out << n;
+	_value = out.str();
+	std::reverse(_value.begin(), _value.end());
+}
+
+bigint::bigint(const std::string &num)
+{
+	bool valid = !num.empty();
+	std::string::size_type i = 0;
+
+	while (valid && i < num.size())
+	{
+		if (!std::isdigit(static_cast<unsigned char>(num[i])))
+			valid = false;
+		++i;
+	}
+	_value = valid ? num : "0";
+	std::reverse(_value.begin(), _value.end());
+	removeZeros();
+}
+
+bigint::bigint(const bigint &src) : _value(src._value) {}
+
+bigint::~bigint() {}
+
+bigint &bigint::operator=(const bigint &rhs)
+{
+	if (this != &rhs)
+		_value = rhs._value;
+	return *this;
+}
+
+std::string bigint::toString() const
+{
+	std::string result(_value);
+	std::reverse(result.begin(), result.end());
+	return result;
+}
+
+std::string bigint::addStrings(const std::string &lhs, const std::string &rhs) const
+{
+	std::string result;
+	std::string::size_type i = 0;
+	std::string::size_type length = lhs.size() > rhs.size() ? lhs.size() : rhs.size();
+	UInt carry = 0;
+
+	while (i < length)
+	{
+		UInt left = i < lhs.size() ? lhs[i] - '0' : 0;
+		UInt right = i < rhs.size() ? rhs[i] - '0' : 0;
+		UInt sum = left + right + carry;
+		result.push_back(static_cast<char>('0' + sum % 10));
+		carry = sum / 10;
+		++i;
+	}
+	if (carry != 0)
+		result.push_back(static_cast<char>('0' + carry));
+	return result;
+}
+
+void bigint::removeZeros()
+{
+	while (_value.size() > 1 && _value[_value.size() - 1] == '0')
+		_value.erase(_value.size() - 1);
+}
+
+bigint bigint::operator+(const bigint &rhs) const
+{
+	bigint result;
+	result._value = addStrings(_value, rhs._value);
+	return result;
+}
+
+bigint &bigint::operator+=(const bigint &rhs)
+{
+	_value = addStrings(_value, rhs._value);
+	return *this;
+}
+
+bigint bigint::operator++(int)
+{
+	bigint previous(*this);
+	*this += 1;
+	return previous;
+}
+
+bigint &bigint::operator++()
+{
+	*this += 1;
+	return *this;
+}
+
+bool bigint::operator==(const bigint &rhs) const { return _value == rhs._value; }
+bool bigint::operator!=(const bigint &rhs) const { return !(*this == rhs); }
+
+bool bigint::operator>(const bigint &rhs) const
+{
+	if (_value.size() != rhs._value.size())
+		return _value.size() > rhs._value.size();
+	return _value > rhs._value;
+}
+
+bool bigint::operator>=(const bigint &rhs) const { return !(*this < rhs); }
+bool bigint::operator<(const bigint &rhs) const { return rhs > *this; }
+bool bigint::operator<=(const bigint &rhs) const { return !(*this > rhs); }
+
+bigint bigint::operator<<(const bigint &shift) const
+{
+	std::istringstream input(shift.toString());
+	UInt count = 0;
+	input >> count;
+	bigint result(*this);
+
+	while (count != 0)
+	{
+		result._value.insert(0, 1, '0');
+		--count;
+	}
+	result.removeZeros();
+	return result;
+}
+
+bigint bigint::operator>>(const bigint &shift) const
+{
+	std::istringstream input(shift.toString());
+	UInt count = 0;
+	input >> count;
+	bigint result(*this);
+
+	while (count != 0 && result._value.size() > 1)
+	{
+		result._value.erase(0, 1);
+		--count;
+	}
+	return result;
+}
+
+bigint &bigint::operator<<=(const bigint &shift)
+{
+	*this = *this << shift;
+	return *this;
+}
+
+bigint &bigint::operator>>=(const bigint &shift)
+{
+	*this = *this >> shift;
+	return *this;
+}
+
+std::ostream &operator<<(std::ostream &out, const bigint &value)
+{
+	return out << value.toString();
+}

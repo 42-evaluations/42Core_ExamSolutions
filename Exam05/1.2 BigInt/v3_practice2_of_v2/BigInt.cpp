@@ -48,9 +48,9 @@ string	BigInt::addStrings(const string &s1, const string &s2) const {
 	size_t i = 0, l1 = s1.size(), l2 = s2.size(), len;
 	len = l1 > l2 ? l1 : l2;
 	UInt	s1_r, // chiffre de s1
-					s2_r, // chiffre de s2
-					res, // resultat du calcul
-					cto = 0; // carry / retenue
+				s2_r, // chiffre de s2
+				res, // resultat du calcul
+				cto = 0; // carry / retenue
 
 	while (i < len)
 	{
@@ -67,9 +67,9 @@ string	BigInt::addStrings(const string &s1, const string &s2) const {
 	return (result);
 }
 
-void	BigInt::removeZeros() {
-    while (_value.size() > 1 && _value[_value.size() - 1] == '0')
-        _value.erase(_value.size() - 1);
+void BigInt::removeZeros() {
+	while (_value.size() > 1 && _value[_value.size() - 1] == '0')
+		_value.erase(_value.size() - 1);
 }
 
 string		BigInt::getVal() const {
@@ -155,8 +155,8 @@ BigInt			BigInt::operator>>(const BigInt &shift) const {
 	BigInt	result = *this;
 
 	while (i < n && result._value.size() > 1) {
-    	result._value.erase(0, 1); // delete 1 char from indice 0
-    	i++;
+		result._value.erase(0, 1);
+		i++;
 	}
 	return (result);
 }
