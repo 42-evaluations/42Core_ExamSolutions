@@ -68,8 +68,8 @@ string	BigInt::addStrings(const string &s1, const string &s2) const {
 }
 
 void	BigInt::removeZeros() {
-	while (_value[_value.size() - 1] == '0')
-		_value.erase(_value.size() - 1);
+    while (_value.size() > 1 && _value[_value.size() - 1] == '0')
+        _value.erase(_value.size() - 1);
 }
 
 string		BigInt::getVal() const {
@@ -154,10 +154,9 @@ BigInt			BigInt::operator>>(const BigInt &shift) const {
 	UInt	i = 0;
 	BigInt	result = *this;
 
-	while (i < n && !(result._value.empty()))
-	{
-		result._value.erase(0, 1); // delete one character from indice = 0
-		i++;
+	while (i < n && result._value.size() > 1) {
+    	result._value.erase(0, 1); // delete 1 char from indice 0
+    	i++;
 	}
 	return (result);
 }
