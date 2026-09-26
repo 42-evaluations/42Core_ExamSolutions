@@ -13,6 +13,7 @@
 #include "BigInt.hpp"
 
 using namespace BigIntTypes;
+using namespace std;
 
 BigInt::BigInt() : _value("0") {}
 
@@ -24,7 +25,7 @@ BigInt::BigInt(UInt n) {
 	std::reverse(_value.begin(), _value.end());
 }
 
-BigInt::BigInt(const String & num) {
+BigInt::BigInt(const string &num) {
 	bool	isNum = true;
 	size_t	i = 0, len = num.size();
 
@@ -57,8 +58,8 @@ BigInt &	BigInt::operator=(const BigInt &rhs) {
 	return (*this);
 }
 
-String	BigInt::addStrings(const String &s1, const String &s2) const {
-	String	result;
+string	BigInt::addStrings(const string &s1, const string &s2) const {
+	string	result;
 	size_t i = 0, l1 = s1.size(), l2 = s2.size(), len;
 	len = l1 > l2 ? l1 : l2;
 	UInt	s1_r, // chiffre de s1
@@ -86,14 +87,14 @@ void	BigInt::removeZeros() {
 		_value.erase(_value.size() - 1);
 }
 
-String		BigInt::getVal() const {
-	String ret = _value;
+string		BigInt::getVal() const {
+	string ret = _value;
 
 	std::reverse(ret.begin(), ret.end());
 	return (ret);
 }
 
-UInt	BigInt::toInt(const String &str) const {
+UInt	BigInt::toInt(const string &str) const {
 	UInt		num;
 	std::istringstream	iss(str);
 

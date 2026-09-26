@@ -18,32 +18,32 @@
 # include <algorithm>
 # include <string>
 
+using namespace std;
+
 namespace BigIntTypes
 {
-	typedef std::string				String;
 	typedef unsigned int			UInt;
 }
 
 class BigInt
 {
 private:
-	typedef			BigIntTypes::String	String;
 	typedef			BigIntTypes::UInt	UInt;
 
-	String			_value;
-	String			addStrings(const String &s1, const String &s2) const;
+	string			_value;
+	string			addStrings(const string &s1, const string &s2) const;
 	void			removeZeros();
 
 public:
 	BigInt();
 	~BigInt();
 	BigInt(UInt n);
-	BigInt(const String &num);
+	BigInt(const string &num);
 	BigInt(const BigInt &src);
 	BigInt&			operator=(const 	BigInt &rhs);
 
-	String			getVal() const;
-	UInt			toInt(const 		String &str) const;
+	string			getVal() const;
+	UInt			toInt(const 		string &str) const;
 
 	BigInt			operator+(const 	BigInt &rhs) const;
 	BigInt&			operator+=(const 	BigInt &rhs);
