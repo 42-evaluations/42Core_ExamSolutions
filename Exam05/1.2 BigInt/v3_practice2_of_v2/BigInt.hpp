@@ -20,16 +20,11 @@
 
 using namespace std;
 
-namespace BigIntTypes
-{
-	typedef unsigned int			UInt;
-}
+typedef unsigned int UInt;
 
 class BigInt
 {
 private:
-	typedef			BigIntTypes::UInt	UInt;
-
 	string			_value;
 	string			addStrings(const string &s1, const string &s2) const;
 	void			removeZeros();

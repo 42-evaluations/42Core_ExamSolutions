@@ -12,9 +12,6 @@
 
 #include "BigInt.hpp"
 
-using namespace BigIntTypes;
-using namespace std;
-
 BigInt::BigInt() : _value("0") {}
 
 BigInt::BigInt(UInt n) {
