@@ -1,8 +1,6 @@
 #include "bigint.hpp"
 #include <cctype>
 
-bigint::bigint() : _value("0") {}
-
 bigint::bigint(UInt n)
 {
 	std::ostringstream out;
@@ -25,32 +23,6 @@ bigint::bigint(const std::string &num)
 	_value = valid ? num : "0";
 	std::reverse(_value.begin(), _value.end());
 	removeZeros();
-}
-
-bigint::bigint(const bigint &src) : _value(src._value) {}
-
-bigint::~bigint() {}
-
-bigint &bigint::operator=(const bigint &rhs)
-{
-	if (this != &rhs)
-		_value = rhs._value;
-	return *this;
-}
-
-std::string bigint::toString() const
-{
-	std::string result(_value);
-	std::reverse(result.begin(), result.end());
-	return result;
-}
-
-UInt bigint::toUInt() const
-{
-	std::istringstream input(toString());
-	UInt value = 0;
-	input >> value;
-	return value;
 }
 
 std::string bigint::addStrings(const std::string &lhs, const std::string &rhs) const
@@ -106,19 +78,12 @@ bigint &bigint::operator++()
 	return *this;
 }
 
-bool bigint::operator==(const bigint &rhs) const { return _value == rhs._value; }
-bool bigint::operator!=(const bigint &rhs) const { return !(*this == rhs); }
-
 bool bigint::operator>(const bigint &rhs) const
 {
 	if (_value.size() != rhs._value.size())
 		return _value.size() > rhs._value.size();
 	return _value > rhs._value;
 }
-
-bool bigint::operator>=(const bigint &rhs) const { return !(*this < rhs); }
-bool bigint::operator<(const bigint &rhs) const { return rhs > *this; }
-bool bigint::operator<=(const bigint &rhs) const { return !(*this > rhs); }
 
 bigint bigint::operator<<(const bigint &shift) const
 {
@@ -157,9 +122,4 @@ bigint &bigint::operator>>=(const bigint &shift)
 {
 	*this = *this >> shift;
 	return *this;
-}
-
-std::ostream &operator<<(std::ostream &out, const bigint &value)
-{
-	return out << value.toString();
 }
