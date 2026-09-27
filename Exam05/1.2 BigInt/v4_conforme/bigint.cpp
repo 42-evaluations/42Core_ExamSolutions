@@ -3,31 +3,31 @@
 
 bigint::bigint(UInt n)
 {
-	std::ostringstream out;
+	ostringstream out;
 	out << n;
 	_value = out.str();
-	std::reverse(_value.begin(), _value.end());
+	reverse(_value.begin(), _value.end());
 }
 
-bigint::bigint(const std::string &num)
+bigint::bigint(const string &num)
 {
 	bool valid = !num.empty();
 	size_t i = 0;
 
 	while (valid && i < num.size())
 	{
-		if (!std::isdigit(static_cast<unsigned char>(num[i])))
+		if (!isdigit(static_cast<unsigned char>(num[i])))
 			valid = false;
 		++i;
 	}
 	_value = valid ? num : "0";
-	std::reverse(_value.begin(), _value.end());
+	reverse(_value.begin(), _value.end());
 	removeZeros();
 }
 
-std::string bigint::addStrings(const std::string &lhs, const std::string &rhs) const
+string bigint::addStrings(const string &lhs, const string &rhs) const
 {
-	std::string result;
+	string result;
 	size_t i = 0;
 	size_t length = lhs.size() > rhs.size() ? lhs.size() : rhs.size();
 	UInt carry = 0;

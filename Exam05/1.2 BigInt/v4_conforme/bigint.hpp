@@ -6,20 +6,22 @@
 # include <algorithm>
 # include <string>
 
+using namespace std;
+
 typedef unsigned int UInt;
 
 class bigint
 {
 private:
-	std::string addStrings(const std::string &lhs, const std::string &rhs) const;
+	string addStrings(const string &lhs, const string &rhs) const;
 	void removeZeros();
-	std::string _value;
+	string _value;
 
 public:
 	bigint() : _value("0") {}
 	~bigint() {}
 	bigint(UInt n);
-	bigint(const std::string &num);
+	bigint(const string &num);
 	bigint(const bigint &src) : _value(src._value) {}
 	bigint &operator=(const bigint &rhs)
 	{
@@ -28,15 +30,15 @@ public:
 		return *this;
 	}
 
-	std::string toString() const
+	string toString() const
 	{
-		std::string result(_value);
-		std::reverse(result.begin(), result.end());
+		string result(_value);
+		reverse(result.begin(), result.end());
 		return result;
 	}
 	UInt toUInt() const
 	{
-		std::istringstream input(toString());
+		istringstream input(toString());
 		UInt value = 0;
 		input >> value;
 		return value;
@@ -59,7 +61,7 @@ public:
 	bigint &operator>>=(const bigint &shift);
 };
 
-inline std::ostream &operator<<(std::ostream &out, const bigint &value)
+inline ostream &operator<<(ostream &out, const bigint &value)
 {
 	return out << value.toString();
 }
