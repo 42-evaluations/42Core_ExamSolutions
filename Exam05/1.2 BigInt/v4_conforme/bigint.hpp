@@ -24,6 +24,7 @@ public:
 	bigint &operator=(const bigint &rhs);
 
 	std::string toString() const;
+	UInt toUInt() const;
 	bigint operator+(const bigint &rhs) const;
 	bigint &operator+=(const bigint &rhs);
 	bigint operator++(int);

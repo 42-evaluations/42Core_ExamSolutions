@@ -14,7 +14,7 @@ bigint::bigint(UInt n)
 bigint::bigint(const std::string &num)
 {
 	bool valid = !num.empty();
-	std::string::size_type i = 0;
+	size_t i = 0;
 
 	while (valid && i < num.size())
 	{
@@ -45,11 +45,19 @@ std::string bigint::toString() const
 	return result;
 }
 
+UInt bigint::toUInt() const
+{
+	std::istringstream input(toString());
+	UInt value = 0;
+	input >> value;
+	return value;
+}
+
 std::string bigint::addStrings(const std::string &lhs, const std::string &rhs) const
 {
 	std::string result;
-	std::string::size_type i = 0;
-	std::string::size_type length = lhs.size() > rhs.size() ? lhs.size() : rhs.size();
+	size_t i = 0;
+	size_t length = lhs.size() > rhs.size() ? lhs.size() : rhs.size();
 	UInt carry = 0;
 
 	while (i < length)
@@ -114,14 +122,12 @@ bool bigint::operator<=(const bigint &rhs) const { return !(*this > rhs); }
 
 bigint bigint::operator<<(const bigint &shift) const
 {
-	std::istringstream input(shift.toString());
-	UInt count = 0;
-	input >> count;
+	UInt count = shift.toUInt();
 	bigint result(*this);
 
 	while (count != 0)
 	{
-		result._value.insert(0, 1, '0');
+		result._value.insert(0, 1, '0'); // add 1 char '0' at indice 0 , insert(position, nombre_de_caractères, caractère)
 		--count;
 	}
 	result.removeZeros();
@@ -130,14 +136,12 @@ bigint bigint::operator<<(const bigint &shift) const
 
 bigint bigint::operator>>(const bigint &shift) const
 {
-	std::istringstream input(shift.toString());
-	UInt count = 0;
-	input >> count;
+	UInt count = shift.toUInt();
 	bigint result(*this);
 
 	while (count != 0 && result._value.size() > 1)
 	{
-		result._value.erase(0, 1);
+		result._value.erase(0, 1); // delete 1 char from indice 0
 		--count;
 	}
 	return result;
