@@ -2,8 +2,10 @@
 
 void removeZeros(string &val)
 {
-	while (val.size() > 1 && val[val.size() - 1] == '0')
-		val.erase(val.size() - 1);
+	size_t len = val.size();
+	
+	while (len > 1 && val[len - 1] == '0')
+		val.erase(len - 1);
 }
 
 string addStrings(string lhs, string rhs)
