@@ -9,7 +9,7 @@ bigint::bigint(UInt n)
 	reverse(_value.begin(), _value.end());
 }
 
-bigint::bigint(const string &num)
+bigint::bigint(string num)
 {
 	bool valid = !num.empty();
 	size_t i = 0;
@@ -25,7 +25,7 @@ bigint::bigint(const string &num)
 	removeZeros();
 }
 
-string bigint::addStrings(const string &lhs, const string &rhs) const
+string bigint::addStrings(string lhs, string rhs) const
 {
 	string result;
 	size_t i = 0;
@@ -52,14 +52,14 @@ void bigint::removeZeros()
 		_value.erase(_value.size() - 1);
 }
 
-bigint bigint::operator+(const bigint &rhs) const
+bigint bigint::operator+(bigint rhs) const
 {
 	bigint result;
 	result._value = addStrings(_value, rhs._value);
 	return result;
 }
 
-bigint &bigint::operator+=(const bigint &rhs)
+bigint &bigint::operator+=(bigint rhs)
 {
 	_value = addStrings(_value, rhs._value);
 	return *this;
@@ -78,14 +78,14 @@ bigint &bigint::operator++()
 	return *this;
 }
 
-bool bigint::operator>(const bigint &rhs) const
+bool bigint::operator>(bigint rhs) const
 {
 	if (_value.size() != rhs._value.size())
 		return _value.size() > rhs._value.size();
 	return _value > rhs._value;
 }
 
-bigint bigint::operator<<(const bigint &shift) const
+bigint bigint::operator<<(bigint shift) const
 {
 	UInt count = shift.toUInt();
 	bigint result(*this);
@@ -99,7 +99,7 @@ bigint bigint::operator<<(const bigint &shift) const
 	return result;
 }
 
-bigint bigint::operator>>(const bigint &shift) const
+bigint bigint::operator>>(bigint shift) const
 {
 	UInt count = shift.toUInt();
 	bigint result(*this);
@@ -112,13 +112,13 @@ bigint bigint::operator>>(const bigint &shift) const
 	return result;
 }
 
-bigint &bigint::operator<<=(const bigint &shift)
+bigint &bigint::operator<<=(bigint shift)
 {
 	*this = *this << shift;
 	return *this;
 }
 
-bigint &bigint::operator>>=(const bigint &shift)
+bigint &bigint::operator>>=(bigint shift)
 {
 	*this = *this >> shift;
 	return *this;

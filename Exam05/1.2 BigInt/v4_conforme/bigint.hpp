@@ -13,7 +13,7 @@ typedef unsigned int UInt;
 class bigint
 {
 private:
-	string addStrings(const string &lhs, const string &rhs) const;
+	string addStrings(string lhs, string rhs) const;
 	void removeZeros();
 	string _value;
 
@@ -21,9 +21,9 @@ public:
 	bigint() : _value("0") {}
 	~bigint() {}
 	bigint(UInt n);
-	bigint(const string &num);
+	bigint(string num);
 	bigint(const bigint &src) : _value(src._value) {}
-	bigint &operator=(const bigint &rhs)
+	bigint &operator=(bigint rhs)
 	{
 		if (this != &rhs)
 			_value = rhs._value;
@@ -43,22 +43,22 @@ public:
 		input >> value;
 		return value;
 	}
-	bigint operator+(const bigint &rhs) const;
-	bigint &operator+=(const bigint &rhs);
+	bigint operator+(bigint rhs) const;
+	bigint &operator+=(bigint rhs);
 	bigint operator++(int);
 	bigint &operator++();
 
-	bool operator==(const bigint &rhs) const { return _value == rhs._value; }
-	bool operator!=(const bigint &rhs) const { return !(*this == rhs); }
-	bool operator>(const bigint &rhs) const;
-	bool operator>=(const bigint &rhs) const { return !(*this < rhs); }
-	bool operator<(const bigint &rhs) const { return rhs > *this; }
-	bool operator<=(const bigint &rhs) const { return !(*this > rhs); }
+	bool operator==(bigint rhs) const { return _value == rhs._value; }
+	bool operator!=(bigint rhs) const { return !(*this == rhs); }
+	bool operator>(bigint rhs) const;
+	bool operator>=(bigint rhs) const { return !(*this < rhs); }
+	bool operator<(bigint rhs) const { return rhs > *this; }
+	bool operator<=(bigint rhs) const { return !(*this > rhs); }
 
-	bigint operator<<(const bigint &shift) const;
-	bigint operator>>(const bigint &shift) const;
-	bigint &operator<<=(const bigint &shift);
-	bigint &operator>>=(const bigint &shift);
+	bigint operator<<(bigint shift) const;
+	bigint operator>>(bigint shift) const;
+	bigint &operator<<=(bigint shift);
+	bigint &operator>>=(bigint shift);
 };
 
 inline ostream &operator<<(ostream &out, const bigint &value)
