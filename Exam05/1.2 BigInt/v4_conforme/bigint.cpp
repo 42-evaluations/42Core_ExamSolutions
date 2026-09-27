@@ -1,31 +1,12 @@
 #include "bigint.hpp"
-#include <cctype>
 
-bigint::bigint(UInt n)
+void removeZeros(string &val)
 {
-	ostringstream out;
-	out << n;
-	_value = out.str();
-	reverse(_value.begin(), _value.end());
+	while (val.size() > 1 && val[val.size() - 1] == '0')
+		val.erase(val.size() - 1);
 }
 
-bigint::bigint(string num)
-{
-	bool valid = !num.empty();
-	size_t i = 0;
-
-	while (valid && i < num.size())
-	{
-		if (!isdigit(static_cast<unsigned char>(num[i])))
-			valid = false;
-		++i;
-	}
-	_value = valid ? num : "0";
-	reverse(_value.begin(), _value.end());
-	removeZeros();
-}
-
-string bigint::addStrings(string lhs, string rhs) const
+string addStrings(string lhs, string rhs)
 {
 	string result;
 	size_t i = 0;
@@ -46,22 +27,40 @@ string bigint::addStrings(string lhs, string rhs) const
 	return result;
 }
 
-void bigint::removeZeros()
+bigint::bigint(UInt n)
 {
-	while (_value.size() > 1 && _value[_value.size() - 1] == '0')
-		_value.erase(_value.size() - 1);
+	ostringstream out;
+	out << n;
+	val = out.str();
+	reverse(val.begin(), val.end());
+}
+
+bigint::bigint(string num)
+{
+	bool valid = !num.empty();
+	size_t i = 0;
+
+	while (valid && i < num.size())
+	{
+		if (!isdigit(static_cast<unsigned char>(num[i])))
+			valid = false;
+		++i;
+	}
+	val = valid ? num : "0";
+	reverse(val.begin(), val.end());
+	removeZeros(val);
 }
 
 bigint bigint::operator+(bigint rhs) const
 {
 	bigint result;
-	result._value = addStrings(_value, rhs._value);
+	result.val = addStrings(val, rhs.val);
 	return result;
 }
 
 bigint &bigint::operator+=(bigint rhs)
 {
-	_value = addStrings(_value, rhs._value);
+	val = addStrings(val, rhs.val);
 	return *this;
 }
 
@@ -80,9 +79,9 @@ bigint &bigint::operator++()
 
 bool bigint::operator>(bigint rhs) const
 {
-	if (_value.size() != rhs._value.size())
-		return _value.size() > rhs._value.size();
-	return _value > rhs._value;
+	if (val.size() != rhs.val.size())
+		return val.size() > rhs.val.size();
+	return val > rhs.val;
 }
 
 bigint bigint::operator<<(bigint shift) const
@@ -92,10 +91,10 @@ bigint bigint::operator<<(bigint shift) const
 
 	while (count != 0)
 	{
-		result._value.insert(0, 1, '0'); // add 1 char '0' at indice 0 , insert(position, nombre_de_caractères, caractère)
+		result.val.insert(0, 1, '0'); // add 1 char '0' at indice 0 , insert(position, nombre_de_caractères, caractère)
 		--count;
 	}
-	result.removeZeros();
+	removeZeros(result.val);
 	return result;
 }
 
@@ -104,9 +103,9 @@ bigint bigint::operator>>(bigint shift) const
 	UInt count = shift.toUInt();
 	bigint result(*this);
 
-	while (count != 0 && result._value.size() > 1)
+	while (count != 0 && result.val.size() > 1)
 	{
-		result._value.erase(0, 1); // delete 1 char from indice 0
+		result.val.erase(0, 1); // delete 1 char from indice 0
 		--count;
 	}
 	return result;
